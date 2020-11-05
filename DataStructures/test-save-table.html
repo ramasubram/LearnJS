@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h3>create JSON table from an array</h3>
+
+<p id="demo"></p>
+
+<script>
+var obj, dbParam, xmlhttp, myObj, x, txt = "";
+obj = { table: "customers", limit: 20 };
+dbParam = JSON.stringify(obj);
+xmlhttp = new XMLHttpRequest();
+//Function to save array in local storage
+function saveList() {
+    var titleNames = [{title: "Programming 1", titleId: "PRRPRR01"},
+                        {title: "Programming 2", titleId: "PRRPRR02"},
+                        {title: "Communication", titleId: "ENTENR0"},
+                        {title: "Entrepreneurship", titleId: "PEDKOU0"}
+                    ];
+    var jsonArray = JSON.stringify(titleNames);
+
+    localStorage.setItem("titleNames", jsonArray);
+}
+//Function for retrieving data from local storage
+function loadList() {
+    var namesObj = JSON.parse(localStorage.getItem("titleNames"));
+
+    txt += "<table width=300px; border='1'>"
+    for (x in namesObj) {
+      txt += "<tr><td>" + namesObj[x].title + "</td><td>"+ namesObj[x].titleId +"</td></tr>";
+    }
+    txt += "</table>"    
+    document.getElementById("demo").innerHTML = txt;
+}
+
+//saveList();
+loadList();
+</script>
+
+</body>
+</html>

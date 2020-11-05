@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <style>
+            .main-container {
+                background-color: khaki;
+                padding: 10mm;
+                margin: 10mm;
+                width: 70%;
+                height: auto;
+                align-content: center;
+                position: relative;
+            }
+            #output, #outputList{
+                text-align: center;
+                border: 5px solid black;
+                background-color: beige;
+                padding: 5mm;
+                margin: 5mm;
+                position: relative;
+                display: flex;
+            }
+            #output{
+                text-align: center;
+                font-size: larger;
+                width: 50%;
+                position: relative;
+            }
+            #outputList {
+                height: fit-content;
+                font-size: medium;
+                width: 70%;
+                position: relative;
+                text-align: left;
+            }
+        </style>
+        <title>Queue</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class = "main-container">
+            <div id="output"><strong>Brand</strong> <br></div>
+            <div id="outputList"></div>
+            <label for="inputBrand">Brand:</label><br>
+            <form>
+                <input type="text" id="inputBrand" name="inputBrand" Value="brand name"><br><br>
+            </form>
+                <div>
+                    <br>
+                    <span>
+                        <button onclick="addBrand()">Add Brand</button>
+                        <button onclick="removeBrand()">Remove Last Brand</button>
+                        <button onclick="callDisplayQueue()">List all Brands</button>
+                        <button onclick="clearBrandList()">Clear Brands List</button>
+                    </span>
+                </div>
+
+        </div>
+
+        <script>
+            let myqueue = new Queue();
+
+            function Queue() {
+                let count = 0;
+                let head = null;
+                let tail = null;
+                this.GetCount = function() {
+                    return count;
+                }
+                this.Enqueue = function(data) {
+                    var node = {
+                        data: data, 
+                        next: head
+                    };
+                    if (head === tail) {
+                        tail == head;
+                    }
+                    head = node;
+                    count++;
+                }
+
+                this.Dequeue = function() {
+                    if (count === 0) {
+                        return null;
+                    }
+                    else {
+                        let current = head;
+                        let previus = null;
+
+                        while (current.next) {
+                            previus = current;
+                            current = current.next;
+                        }
+                        if (count > 1) {
+                            previus.next = null;
+                            tail = previus;
+                        }
+                        else {
+                            head = null;
+                            tail = null;
+                        }
+                        count--;
+                        myqueue.DisplayThisQueue();
+                    }
+                }
+                this.DisplayThisQueue = function() {
+                    if (head === null) {
+                        return null;
+                    }
+                    else {
+                        let arr = new Array();
+                        let current = head;
+
+                        document.getElementById("outputList").innerHTML = "";
+                        for(let i=0; i < count; i++) {
+                                arr[i] = current.data + "<br>";
+                                current = current.next;
+                                document.getElementById("outputList").innerHTML += arr[i];
+                            }
+                        return ;
+                    }
+                }
+            }
+            function callDisplayQueue() {
+                myqueue.DisplayThisQueue();
+            }
+            function addBrand() {
+                var tempBrand = document.getElementById("inputBrand").value;
+                myqueue.Enqueue(tempBrand);
+            }
+            function removeBrand() {
+                myqueue.Dequeue();
+            }
+            myqueue.Enqueue("Volvo");
+            myqueue.Enqueue("BMW");
+            myqueue.Enqueue("Mercedes");
+            myqueue.Enqueue("Toyota");
+            myqueue.Enqueue("Audi");
+            myqueue.Enqueue("Tesla");
+
+</script>
+    </body>
+</html>

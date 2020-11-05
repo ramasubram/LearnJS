@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Stack</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css" type="text/css">
+        <script src="jscript.js"></script>
+    </head>
+
+    <body>
+        <input type="text" id="input1" name="input1">
+
+        <button onclick="callSearch()">Check Status</button>
+
+        <div id="output"></div>
+        <script>
+
+            var titleNames = ["Första Sida",
+                                "Arbete",
+                                "Bo, bygga och miljö",
+                                "Förskola och utbildning",
+                                "Kommun och politik",
+                                "Omsorg och stöd",
+                                "Trafik och stadsplanering",
+                                "Uppleva och göra"
+                            ];
+
+            function Stack(array) {
+                this.array = [];
+                if (array) this.array = array;
+            }
+
+            Stack.prototype.getBuffer = function() {
+                return this.array.slice();
+            }
+
+            Stack.prototype.peak = function() {
+                return this.array[this.array.length - 1];
+            }
+
+            Stack.prototype.pop = function() {
+                return this.array.pop();
+            }
+
+            Stack.prototype.push = function(value) {
+                this.array.push(value);
+            }
+
+            Stack.prototype.isEmpty = function() {
+                return this.array.length == 0;
+            }
+
+            function stackSearch(sstack, element) {
+                var bufferArray = sstack.getBuffer();
+
+                var bufferStack = new Stack(bufferArray)
+                
+                while (!bufferStack.isEmpty()) {
+                    console.log(bufferStack.peak(), element);
+                    if (bufferStack.pop() == element) {
+                        return true;
+                    }
+                }
+            } 
+
+            function buildStack(newstack, namesArray) {
+                var tempObj = {};
+
+                for (let i=0; i < namesArray.length; i++) {
+                    tempObj = {name: namesArray[i], finishedStatus: false};
+                    newstack.push(tempObj);
+                }
+            } 
+
+            function stackListAll(sstack) {
+                var bufferArray = sstack.getBuffer();
+                var tempObj = {};
+                var bufferStack = new Stack(bufferArray)
+
+                for (let i = bufferArray.length; i > 0; i--) {
+                    tempObj = bufferArray.pop();
+                    console.log(i, tempObj);
+                }
+            } 
+
+            function stackArraySearch(sstack, element) {
+                var tempObj = {};
+
+                let bufferArray = sstack.getBuffer();
+
+                console.log("11111", element);
+                for (let i=0; i < bufferArray.length; i++) {
+                    tempObj = bufferArray[i];
+                    console.log(i, "--", tempObj.name, "--", tempObj.finishedStatus);
+                    if (tempObj.name == element) {
+                        console.log("match");
+                        return i;
+                    }
+                }
+                return -1;
+            } 
+
+            function callSearch() {
+                var minstack = new Stack([]);
+                var searchItem = document.getElementById("input1").value;
+console.log(searchItem);
+                buildStack(minstack, titleNames);
+//                stackListAll(minstack);
+                if (stackArraySearch(minstack, searchItem) < 0) {
+                    document.write("Item not found");
+                }
+
+            }
+
+//      document.getElementById("output").innerHTML += minstack.minstackObj[];
+//      document.getElementById("output").innerHTML = "Found " + stackSearch(minstack, "Hej 2");
+//      document.getElementById("output").innerHTML = "title name";
+
+/*      document.getElementById("output").innerHTML = minstack.getBuffer();
+        document.getElementById("output").innerHTML = "Found " + stackSearch(minstack, "Hej 2");
+        console.log(document.getElementById("output").innerHTML);
+        document.getElementById("output").innerHTML = minstack.pop();
+        document.getElementById("output").innerHTML += " - " +  minstack.pop(); */
+        </script>
+    </body>
+</html>

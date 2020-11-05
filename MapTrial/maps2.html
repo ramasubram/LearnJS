@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>A Map With Placemarks</title>
+</head>
+
+<body>
+<h1>A Map With Placemarks</h1>
+
+<div id="map" style="width:600px; height: 400px;"></div>
+
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+
+<script>
+	var map_parameters = { center: {lat: 47.490, lng: -117.585}, zoom: 8 };
+	var map = new google.maps.Map(document.getElementById('map'), map_parameters);
+
+	var position1 = { position: {lat: 47.490, lng: -117.585}, map: map };
+	var position2 = { position: {lat: 47.661, lng: -117.404}, map: map };
+
+	var marker1 = new google.maps.Marker(position1);
+	var marker2 = new google.maps.Marker(position2);
+</script>
+</body>
+</html>

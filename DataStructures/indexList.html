@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <!-- 
+            linked list - script functions
+            display all
+            display at index
+            add first
+            add at index
+            remove first
+            remove at index
+            GetCount()
+
+        --> 
+        <title>Linked list</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .main-container {
+                background-color: khaki;
+                padding: 10mm;
+                margin: 10mm;
+                width: 70%;
+                height: auto;
+                align-content: center;
+                position: relative;
+            }
+            #output, #output-list{
+                text-align: center;
+                border: 5px solid black;
+                background-color: beige;
+                padding: 5mm;
+                margin: 5mm;
+                position: relative;
+                display: flex;
+            }
+            #output{
+                text-align: center;
+                font-size: larger;
+                width: 50%;
+                position: relative;
+            }
+            #output-list {
+                height: fit-content;
+                font-size: medium;
+                width: 70%;
+                position: relative;
+                text-align: left;
+            }
+        </style>
+    </head>
+    <body>
+        <div class = "main-container">
+                <label for="input-item">Item Name</label><br>
+                <input type="text" id="input-item" name="input-item-position" placeholder="enter item name here"><br><br>
+                <label for="input-item-position">Item Position</label><br>
+                <input type="number" id="input-item-position" name="input-item-position" placeholder=0><br><br>
+                <div>
+                    <br>
+                    <span>
+                        <button onclick="callAdd()">Add Item</button>
+                        <button onclick="callRemove()">Remove Item</button>
+                        <button onclick="callDisplayAll()">List all Items</button>
+                        <button onclick="callClearAll()">Clear Item List</button>
+                    </span>
+                </div>
+
+                <div id="output"><strong>Item List</strong> <br></div>
+                <div id="output-list"></div>
+        </div>
+            
+        <script>
+            function LinkedList() {
+                let count=0;
+                let head=null;
+
+                this.GetCount = function() {
+                    return count;
+                }//end getcount
+
+                this.DisplayAll= function() {
+                    if (head === null) {return null;}
+                    else {
+                        var current = head;
+                        var tempOutput = "";
+
+                        for(let i=0; i < count; i++) {
+                            tempOutput += (current.data + "<br>");
+                            current = current.next;
+                        }
+                        return tempOutput;
+                   }
+                }//end DisplayAll
+  
+                this.ClearAll= function() {
+                    head = null;
+                    count = 0;
+                }//end ClearAll
+
+                this.AddFirst= function(data) {
+                    let node = {data: data, next: head};
+                    head = node;
+                    count ++;
+                }//end addfirst
+
+                this.Add = function(data, index) {
+                    if (index == 0) {this.AddFirst(data);}
+                    else if (index > -1 && index <= count) {
+                        var node = {data:data, next:null};
+                        let previous;
+                        let current = head;
+                        let i = 0;
+                        while (i++ < index) {
+                            previous = current;
+                            current = current.next;
+                        }
+                        previous.next = node;
+                        node.next = current;
+                        count ++;
+                    }
+                    else {
+                        alert("Error");
+                    }
+                }//end add
+
+                this.Remove = function(index) {
+                    if (index < 0 || ((index+1) > count)) {
+                        alert("Error");
+                    }
+                    else if (count == 1) {
+                        head = null;
+                        count = 0;
+                    }
+                    else if (index == 0) {
+                        head=head.next;
+                        count--;
+                    }
+                    else {
+                        let i = index;
+                        let previous = head;
+                        let current = previous.next;
+                        while (i-- > 1 && current.next != null) {
+                            previous = current;
+                            current = current.next;
+                        } 
+                        if (current.next == null) {
+                                previous.next = null;
+                                current = null;
+                        }
+                        else {
+                            previous.next = current.next;
+                        }
+                        count--;
+                    }
+                }//end remove
+            }
+
+            let minlista = new LinkedList();
+            
+            function callAdd() {
+                let position = document.getElementById("input-item-position").value;
+                let tempInputItem = document.getElementById("input-item").value;
+                let count = minlista.GetCount();
+
+                if (position < 0) {
+                    position = count;
+                }
+                minlista.Add(tempInputItem, position);
+                document.getElementById("output-list").innerHTML = minlista.DisplayAll();
+            }
+            function callRemove() {
+                let count=minlista.GetCount();
+                let position = document.getElementById("input-item-position").valueAsNumber;
+                let tempInputItem = document.getElementById("input-item").value;
+
+                minlista.Remove(position);
+                document.getElementById("output-list").innerHTML = minlista.DisplayAll();
+            }
+            function callDisplayAll() {
+                minlista.DisplayAll();
+                document.getElementById("output-list").innerHTML = minlista.DisplayAll();
+            }
+            function callClearAll() {
+                minlista.ClearAll();
+                document.getElementById("output-list").innerHTML = minlista.DisplayAll();
+            }
+        </script>
+    </body>
+</html>

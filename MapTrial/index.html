@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=&v=weekly" defer></script>
+    </head>
+    <body>
+        <div id="mapholder"></div>
+        <button onclick="showPosition()">Map</button>
+
+        <script>
+            function showPosition() {
+                var latlon ="";
+                var position = navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    console.log(position.coords);
+                    latlon = position.coords.latitude + "," + position.coords.longitude;
+                });
+
+                console.log(position);
+
+                var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false&key=YOUR_KEY";
+
+                document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+            }
+        </script>
+    </body>
+
+</html>

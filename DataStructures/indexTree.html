@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack</title>
+  </head>
+  <body>
+    <div id="output"></div>
+    <script>
+      document.getElementById("output").innerHTML = "TEST" + "<br>";
+
+      const LEFT = 0;
+      const RIGHT = 1;
+
+      class TreeNode {
+        constructor(value) {
+          this.value = value;
+          this.descendents = [];
+          this.parent = null;
+        }
+
+        get left() {
+          return this.descendents[LEFT];
+        }
+
+        set left(node) {
+          this.descendents[LEFT] = node;
+          if (node) {
+            node.parent = this;
+          }
+        }
+
+        get right() {
+          return this.descendents[RIGHT];
+        }
+
+        set right(node) {
+          this.descendents[RIGHT] = node;
+          if (node) {
+            node.parent = this;
+          }
+        }
+      }
+
+      class BinarySearchTree {
+        constructor() {
+          this.root = null;
+          this.size = 0;
+        }
+
+        add(value) {
+          const newNode = new TreeNode(value);
+
+          if (this.root) {
+            const { found, parent } = false;
+            if (found) { // duplicated: value already exist on the tree
+              found.meta.multiplicity = (found.meta.multiplicity || 1) + 1;
+            }
+            else if (value < parent.value) {
+              parent.left = newNode;
+            }
+            else {
+              parent.right = newNode;
+            }
+          } else {
+            this.root = newNode;
+          }
+
+          this.size += 1;
+          return newNode;
+        }
+/**
+        find(value)
+        remove(value)
+        getMax()
+        getMin() **/
+      }
+      let MyNode = new TreeNode(0);
+      let MyTree = new BinarySearchTree();
+
+     
+      document.getElementById("output").innerHTML = "TEST" + "<br>" + MyTree.add(10) + MyTree.add(20);
+    </script>
+  </body>
+</html>

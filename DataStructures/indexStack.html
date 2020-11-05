@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Stack</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css" type="text/css">
+        <script src="jscript.js"></script>
+    </head>
+
+    <body>
+        <div id="output"></div>
+        <script>
+            document.getElementById("output").innerHTML = "TEST";
+
+            function Stack(array) {
+                this.array = [];
+                if (array) this.array = array;
+            }
+
+            Stack.prototype.getBuffer = function() {
+                return this.array.slice();
+            }
+
+            Stack.prototype.peak = function() {
+                return this.array[this.array.length - 1];
+            }
+
+            Stack.prototype.pop = function() {
+                return this.array.pop();
+            }
+
+            Stack.prototype.push = function(value) {
+                this.array.push(value);
+            }
+
+            Stack.prototype.isEmpty = function() {
+                return this.array.length == 0;
+            }
+
+            function stackSearch(sstack, element) {
+                var bufferArray = sstack.getBuffer();
+
+                var bufferStack = new Stack(bufferArray)
+
+                while (!bufferStack.isEmpty()) {
+                    console.log(bufferStack.peak(), element);
+                    if (bufferStack.pop() == element) {
+                        return true;
+                    }
+                }
+            }
+
+            var minstack = new Stack([]);
+
+            minstack.push("Första Sida");
+            minstack.push("Arbete");
+            minstack.push("Bo, bygga och miljö");
+            minstack.push("Förskola och utbildning");
+            minstack.push("Kommun och politik");
+            minstack.push("Omsorg och stöd");
+            minstack.push("Trafik och stadsplanering");
+            minstack.push("Uppleva och göra");
+
+            document.getElementById("output").innerHTML = minstack.getBuffer();
+/*            document.getElementById("output").innerHTML = "Found " + stackSearch(minstack, "Hej 2");
+            console.log(document.getElementById("output").innerHTML);
+            document.getElementById("output").innerHTML = minstack.pop();
+            document.getElementById("output").innerHTML += " - " +  minstack.pop(); */
+        </script>
+    </body>
+</html>
